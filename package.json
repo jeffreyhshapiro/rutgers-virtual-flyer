@@ -1,0 +1,19 @@
+{
+  "name": "rutgers-virtual-flyer",
+  "version": "1.0.0",
+  "description": "* Work in groups of 3 * The goal is to create a fully functioning full stack app that shows your Rutgers pride * You will use Handlebars to generate HTML * You will use Sequelize to create data models for the database storage * You will use Express for routing * You will use Bootstrap (or Materialize) as a frontend CSS framework * You will use Passport for authentication * You will use jQuery for front end form validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffreyhshapiro/rutgers-virtual-flyer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeffreyhshapiro/rutgers-virtual-flyer/issues"
+  },
+  "homepage": "https://github.com/jeffreyhshapiro/rutgers-virtual-flyer#readme"
+}
