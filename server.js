@@ -20,6 +20,7 @@ app.get('/',function(req,res){
   res.send("Hello there !!");
 });
 
+
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);
