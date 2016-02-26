@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/',function(req,res){
-  res.send("Hello there !!");
+  res.render('home')
 });
 
 
