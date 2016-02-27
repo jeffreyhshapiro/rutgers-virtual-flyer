@@ -7,6 +7,8 @@ var PORT = process.env.PORT || 8080;
 var app = express();
 var connection = new Sequelize('DB_Virtual_Flyer','root');
 
+app.use(express.static('public'));
+
 app.engine('handlebars',expressHandlebars({
   defaultLayout :'main'
 }));
