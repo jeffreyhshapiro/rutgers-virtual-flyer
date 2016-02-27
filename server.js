@@ -22,6 +22,10 @@ app.get('/',function(req,res){
   res.render('homeView')
 });
 
+app.get('/login',function(req,res){
+  res.render('login')
+});
+
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);
