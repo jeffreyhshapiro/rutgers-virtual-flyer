@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/',function(req,res){
-  res.render('home')
+  res.render('homeView')
 });
 
 
