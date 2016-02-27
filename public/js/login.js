@@ -8,7 +8,9 @@ window.userInfo = {
 
 $(document).ready(function(){
 
-   $("#loginModal").modal("show");
+  $("#login").on("click", function(){
+    $("#loginModal").modal("show")
+  })
 
    $("#email").on("click",function(){
      $("#loginModal").modal("hide");

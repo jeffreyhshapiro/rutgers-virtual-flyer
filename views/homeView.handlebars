@@ -3,7 +3,7 @@
       <img src="/img/logo.jpg" id="logo"/>
       <a href="#" class="nav_links"> Places Listings </a>
       <a href="#" class="nav_links"> Place Detail </a>
-      <a href="/login" class="nav_links" id="login"> Login/Register </a>
+      <a href="#" class="nav_links" id="login" data-target="#loginModal"> Login/Register </a>
       <a href="homeLink.html" class="nav_links"> Home </a>
     </div>
     <div id="welcome_text_div">
@@ -14,3 +14,68 @@
     <div id="searchbar_div">
     </div>
   </div>
+    <footer>
+    <div>
+        <img src="./img/footer.jpg" id="footer_img">
+    </div>
+    <i class="divider" id="divider_vertical"></i>
+    <div>
+        <h2>Title</h2>
+        <p>text</p>
+    </div>
+    <i class="divider" id="divider_horizontal"></i>
+    <div>
+        <h2>Title</h2>
+        <p>text</p>
+    </div>
+</footer>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Login/Register</h4>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-block btn-danger" id="email">Log In using e-mail</button> </br></br></br>
+        <button type="button" class="btn btn-block btn-primary" id="facebook">Log In using Facebook</button> </br></br></br>
+        <button type="button" class="btn btn-block btn-success" id="linkedin">Log In using Linked In</button>
+      </div>
+      <div class="modal-footer">
+  <!--       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.Login modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="emailModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Register</h4>
+      </div>
+      <div class="modal-body">
+        <div class="input-group-addon" id="newUserRegister">
+          <label>E-mail ID &nbsp</label>
+          <input type="text" class="form-control" name="eMail" placeholder="E-Mail">
+          <br \>
+          <label>First Name</label>
+          <input type="text" class="form-control" name="firstName" placeholder="First Name">
+          <br \>
+          <label>Last Name</label>
+          <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+          <br \><br \>
+          <!-- <button type="submit" class="btn btn-primary btn-md" id="register">Register</button> -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveRegister">Save</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /e-mail Form modal -->
+
