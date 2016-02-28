@@ -7,7 +7,6 @@ console.log(dayOfWeek)
 
 switch(dayOfWeek) {
   case 1:
-    console.log("Monday")
     if (currentTime >=6 && currentTime <= 11) {
       console.log ("Monday morning")
     } else if (currentTime >= 12 && currentTime <= 16) {
@@ -21,7 +20,6 @@ switch(dayOfWeek) {
     }
     break;
   case 2:
-    console.log("Tuesday")
     if (currentTime >=6 && currentTime <= 11) {
       console.log ("Tuesday morning")
     } else if (currentTime >= 12 && currentTime <= 16) {
@@ -35,7 +33,6 @@ switch(dayOfWeek) {
     }
     break;
   case 3:
-    console.log("Wednesday")
     if (currentTime >=6 && currentTime <= 11) {
       console.log ("Wednesday morning")
     } else if (currentTime >= 12 && currentTime <= 16) {
@@ -47,7 +44,6 @@ switch(dayOfWeek) {
     }
     break;
   case 4:
-    console.log("Thursday")
     if (currentTime >=6 && currentTime <= 11) {
       console.log ("Thursday morning")
     } else if (currentTime >= 12 && currentTime <= 16) {
@@ -61,7 +57,6 @@ switch(dayOfWeek) {
     }
     break;
   case 5:
-    console.log("Friday")
     if (currentTime >=6 && currentTime <= 11) {
       console.log ("Friday morning")
     } else if (currentTime >= 12 && currentTime <= 16) {
