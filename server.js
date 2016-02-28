@@ -26,6 +26,10 @@ app.get('/login',function(req,res){
   res.render('login');
 });
 
+app.get('/placeDetails', function(req, res) {
+  res.render('placedetails')
+})
+
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);
