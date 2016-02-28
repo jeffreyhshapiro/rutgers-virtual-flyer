@@ -36,6 +36,7 @@
           // Clear out the old markers.
           markers.forEach(function(marker) {
             marker.setMap(null);
+            $("#placeInfo").empty();
           });
           markers = [];
 
@@ -44,7 +45,7 @@
           places.forEach(function(place) {
             console.log(place)
             var createPanels = $("<div>").addClass("panel panel-default")
-            var addPanelBody = $("<div>").addClass("panel-body").append(place.name + " ").append("<br>"+place.formatted_address)
+            var addPanelBody = $("<div>").addClass("panel-body").append(place.name).append("<br>"+place.formatted_address)
             var placeInfo = $("#placeInfo").append(createPanels)
                                            .append(addPanelBody)
                                            
