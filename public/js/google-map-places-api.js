@@ -10,7 +10,6 @@
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.4867, lng: -74.4444},
           zoom: 13,
-          radius: 10,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -41,6 +40,7 @@
           });
           markers = [];
 
+          $("#introMsg").remove()
           $("#placeInfo").empty()
 
           // For each place, get the icon, name and location.
@@ -75,6 +75,6 @@
               bounds.extend(place.geometry.location);
             }
           });
-          map.fitBounds(bounds);
+          //map.fitBounds(bounds);
         });
       }
