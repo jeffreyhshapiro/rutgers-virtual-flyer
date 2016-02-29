@@ -10,6 +10,7 @@
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.4867, lng: -74.4444},
           zoom: 13,
+          radius: 10,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -44,11 +45,11 @@
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
             console.log(place)
-            var createPanels = $("<div>").addClass("panel panel-default")
-            var addPanelBody = $("<div>").addClass("panel-body").append(place.name).append("<br>"+place.formatted_address)
+            var rating = $("<div>").addClass("pull-right").append("Rating: "+ place.rating + "/5")
+            var createPanels = $("<div>").addClass("panel panel-default");
+            var addPanelBody = $("<div>").addClass("panel-body").append(place.name).append("<br>"+place.formatted_address).append(rating);
             var placeInfo = $("#placeInfo").append(createPanels)
-                                           .append(addPanelBody)
-                                           
+                                           .append(addPanelBody); 
             var icon = {
               url: place.icon,
               size: new google.maps.Size(71, 71),
