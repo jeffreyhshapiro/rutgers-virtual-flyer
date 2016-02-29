@@ -41,15 +41,17 @@
           });
           markers = [];
 
+          $("#placeInfo").empty()
+
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
             console.log(place)
             var rating = $("<div>").addClass("pull-right").append("Rating: "+ place.rating + "/5")
             var createPanels = $("<div>").addClass("panel panel-default");
-            var addPanelBody = $("<div>").addClass("panel-body").append(place.name).append("<br>"+place.formatted_address).append(rating);
-            var placeInfo = $("#placeInfo").append(createPanels)
-                                           .append(addPanelBody); 
+            var addPanelBody = $("<div>").addClass("panel-body").addClass("col-md-6").append(place.name).append("<br>"+place.formatted_address).append(rating);
+            var placeInfo = $("#placeInfo").append(addPanelBody);
+                                            
             var icon = {
               url: place.icon,
               size: new google.maps.Size(71, 71),
