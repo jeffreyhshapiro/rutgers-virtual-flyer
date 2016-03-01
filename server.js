@@ -112,38 +112,19 @@ var Users = connection.define ('user',{
     type:Sequelize.STRING,
     unique:false,
     allowNull:false,
-  }
-});
-
+   }}, {
+    hooks: {
+      beforeCreate : function(input){
+        input.password = bcrypt.hashSync(input.password,10);
+      }
+    }
+}); // End of creation of login table
 
 app.get('/',function(req,res){
-  debugger;
   res.render('homeView')
 });
 
-// app.get('/login',function(req,res){
-//   res.render('login');
-// });
-
 app.post('/loginentry',function(req,res){
-  var fName = req.body.fName;
-  var lName = req.body.lName;
-  var emailAddress = req.body.email;
-  var password = req.body.password;
-
-  // Users.create({
-  //   firstName :fName,
-  //   lastName:lName,
-  //   emailAddress:emailAddress,
-  //   password:password
-  //   }).then(function(results){
-  //     res.redirect('/?msg=Success');
-  //   }).catch(function(err){
-  //     debugger;
-  //     console.log(err.errors[0].message);
-  //     res.redirect('/?msg='+err.error[0].message);
-  //   });
-
   Users.create(req.body).then(function(results){
     res.redirect('/?msg=Account Created');
   }).catch(function(err){
