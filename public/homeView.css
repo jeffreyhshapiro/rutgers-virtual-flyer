@@ -1,6 +1,6 @@
-body {
+/*body {
     margin: 0;
-}
+}*/
 
 #header {
     position: relative;
@@ -130,10 +130,10 @@ footer {
     font-style: italic;
     color: red;
 }
-#modalLogin {
+/*#modalLogin {
     height: 50px;
     width:120px;
-}
+*/}
 #modalFooterText {
     color: grey;
     font-size: 1.5em;
