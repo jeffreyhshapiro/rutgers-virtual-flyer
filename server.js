@@ -7,7 +7,7 @@ var bcrypt = require('bcryptjs');
 var session = require('express-session');
 //requiring passport last
 var passport = require('passport');
-var passportLocal = require('passport-local');
+var passportLocal = require('passport-local').Strategy;
 
 var app = express();
 var connection = new Sequelize('DB_Virtual_Flyer','root');
@@ -36,11 +36,35 @@ app.use(session({
 }))
 
 //passport use methed as callback when being authenticated
-passport.use(new passportLocal.Strategy(function(emailAddress, password, done) {
+// passport.use(new passportLocal(function(username, password, done) {
+//     //check password in db
+//     Users.findOne({
+//         where: {
+//             emailAddress: emailAddress
+//         }
+//     }).then(function(user) {
+//         //check password against hash
+//         if(user){
+//             bcrypt.compare(password, user.dataValues.password, function(err, user) {
+//                 if (user) {
+//                   //if password is correct authenticate the user with cookie
+//                   done(null, { id: emailAddress, emailAddress: emailAddress });
+//                 } else{
+//                   done(null, null);
+//                 }
+//             });
+//         } else {
+//             done(null, null);
+//         }
+//     });
+
+// }));
+
+passport.use(new passportLocal.Strategy(function(username, password, done) {
     //check password in db
     Users.findOne({
         where: {
-            emailAddress: emailAddress
+            username: username
         }
     }).then(function(user) {
         //check password against hash
@@ -48,7 +72,7 @@ passport.use(new passportLocal.Strategy(function(emailAddress, password, done) {
             bcrypt.compare(password, user.dataValues.password, function(err, user) {
                 if (user) {
                   //if password is correct authenticate the user with cookie
-                  done(null, { id: emailAddress, emailAddress: emailAddress });
+                  done(null, { id: username, username: username });
                 } else{
                   done(null, null);
                 }
@@ -103,7 +127,7 @@ var Users = connection.define ('user',{
       }
     }
   },
-  emailAddress : {
+  username : {
     type : Sequelize.STRING,
     unique :true,
     allowNull : false
@@ -137,6 +161,7 @@ app.post('/loginentry',function(req,res){
 app.post('/check', passport.authenticate('local', {
     successRedirect: '/?msg=Welcome back!!',
     failureRedirect: '/?msg=Login Credentials do not work'
+    // failureFlash: 'Invalid username or password.'
 }));
 
 connection.sync().then(function(){
