@@ -16,6 +16,13 @@ $(document).ready(function(){
      $("#emailModal").modal("show");
   });
 
+  $("#modalLogin").on("click", function(){
+    $("#loginModal").modal("hide");
+    $("#emailModal").modal("hide");
+    $("#loginCheckModal").modal("show");
+
+  });
+
   $("#facebook").on ("click",function(){
     // debugger;
     console.log("Clicked facebook");

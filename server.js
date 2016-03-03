@@ -36,11 +36,11 @@ app.use(session({
 }))
 
 //passport use methed as callback when being authenticated
-passport.use(new passportLocal.Strategy(function(username, password, done) {
+passport.use(new passportLocal.Strategy(function(emailAddress, password, done) {
     //check password in db
     Users.findOne({
         where: {
-            username: username
+            emailAddress: emailAddress
         }
     }).then(function(user) {
         //check password against hash
@@ -48,7 +48,7 @@ passport.use(new passportLocal.Strategy(function(username, password, done) {
             bcrypt.compare(password, user.dataValues.password, function(err, user) {
                 if (user) {
                   //if password is correct authenticate the user with cookie
-                  done(null, { id: username, username: username });
+                  done(null, { id: emailAddress, emailAddress: emailAddress });
                 } else{
                   done(null, null);
                 }
@@ -134,10 +134,10 @@ app.post('/loginentry',function(req,res){
  });
 
 //check login with db
-// app.post('/check', passport.authenticate('local', {
-//     successRedirect: '/events',
-//     failureRedirect: '/?msg=Login Credentials do not work'
-// }));
+app.post('/check', passport.authenticate('local', {
+    successRedirect: '/?msg=Welcome back!!',
+    failureRedirect: '/?msg=Login Credentials do not work'
+}));
 
 connection.sync().then(function(){
   app.listen(PORT,function(){
