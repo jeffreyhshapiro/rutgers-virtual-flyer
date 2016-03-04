@@ -8,6 +8,7 @@ var session = require('express-session');
 //requiring passport last
 var passport = require('passport');
 var passportLocal = require('passport-local').Strategy;
+var passportFacebook = require('passport-facebook').Strategy;
 
 var app = express();
 // var connection = new Sequelize('DB_Virtual_Flyer','root');
@@ -35,30 +36,32 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-//passport use methed as callback when being authenticated
-// passport.use(new passportLocal(function(username, password, done) {
-//     //check password in db
-//     Users.findOne({
-//         where: {
-//             emailAddress: emailAddress
-//         }
-//     }).then(function(user) {
-//         //check password against hash
-//         if(user){
-//             bcrypt.compare(password, user.dataValues.password, function(err, user) {
-//                 if (user) {
-//                   //if password is correct authenticate the user with cookie
-//                   done(null, { id: emailAddress, emailAddress: emailAddress });
-//                 } else{
-//                   done(null, null);
-//                 }
-//             });
-//         } else {
-//             done(null, null);
-//         }
-//     });
+passport.use(new passportFacebook({
+    clientID: '1548091428822940',
+    clientSecret: 'f60d23cc2234f4886a397996bb870207',
+    callbackURL: "http://localhost:8080/login/facebook/return"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
 
-// }));
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+app.get('/login/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/login/facebook/return',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 passport.use(new passportLocal.Strategy(function(username, password, done) {
     //check password in db
