@@ -62,7 +62,7 @@ app.use(session({
 
 passport.use(new passportLocal.Strategy(function(username, password, done) {
     //check password in db
-    Users.findOne({
+    User.findOne({
         where: {
             username: username
         }
@@ -92,7 +92,7 @@ passport.deserializeUser(function(id, done) {
     done(null, { id: id, name: id })
 });
 
-var Users = connection.define ('user',{
+var User = connection.define ('user',{
   firstName : {
     type : Sequelize.STRING,
     unique : true,
@@ -145,11 +145,12 @@ var Users = connection.define ('user',{
 }); // End of creation of login table
 
 app.get('/',function(req,res){
+  console.log(req.user);
   res.render('homeView')
 });
 
 app.post('/loginentry',function(req,res){
-  Users.create(req.body).then(function(results){
+  User.create(req.body).then(function(results){
     res.redirect('/?msg=Account Created');
   }).catch(function(err){
     res.redirect('/?msg='+ err.errors[0].message);
@@ -158,12 +159,40 @@ app.post('/loginentry',function(req,res){
  });
 
 //check login with db
-app.post('/check', passport.authenticate('local', {
-    successRedirect: '/?msg=Welcome back!!',
-    failureRedirect: '/?msg=Login Credentials do not work'
-    // failureFlash: 'Invalid username or password.'
-}));
+// app.post('/check', passport.authenticate('local', {
+//     successRedirect: '/?msg=Welcome back!!',
+//     failureRedirect: '/?msg=Login Credentials do not work'
+//     // failureFlash: 'Invalid username or password.'
+// }));
 
+// app.post('/check',
+//   passport.authenticate('local', {
+//     successRedirect :'/',
+//     failureRedirect:'/check'
+//   }));
+app.post('/check',
+  passport.authenticate('local'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    // console.log(req.user.username);
+    res.redirect('/' + req.user.username);
+  });
+
+app.get('/:username',function(req,res){
+  debugger;
+    User.findAll({
+    where: {
+      username: req.params.username
+    }
+  }).then(function(results){
+    // console.log(results[0].dataValues.firstName);
+    // console.log(results[0].dataValues.lastName);
+    var authenticatedUser = results[0].dataValues.firstName;
+    res.render('homeView',{authenticatedUser});
+  });
+
+});
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);
