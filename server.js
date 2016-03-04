@@ -11,8 +11,8 @@ var passportLocal = require('passport-local').Strategy;
 var passportFacebook = require('passport-facebook').Strategy;
 
 var app = express();
-// var connection = new Sequelize('DB_Virtual_Flyer','root');
-var connection = new Sequelize ('mysql://sql2a0nrhy1ejduq:unq2bz7o6h39ykrd@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xjwoutzkamibecal');
+var connection = new Sequelize('DB_Virtual_Flyer','root');
+// var connection = new Sequelize ('mysql://sql2a0nrhy1ejduq:unq2bz7o6h39ykrd@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xjwoutzkamibecal');
 
 app.use(express.static('public'));
 
@@ -39,7 +39,7 @@ app.use(session({
 passport.use(new passportFacebook({
     clientID: '1548091428822940',
     clientSecret: 'f60d23cc2234f4886a397996bb870207',
-    callbackURL: "http://localhost:8080/login/facebook/return"
+    callbackURL: "http://localhost:8080/facebook/return"
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
@@ -54,12 +54,13 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
-app.get('/login/facebook',
+app.get('/facebook',
   passport.authenticate('facebook'));
 
-app.get('/login/facebook/return',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+app.get('/facebook/return',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
+      debugger;
     res.redirect('/');
   });
 
@@ -148,7 +149,6 @@ var User = connection.define ('user',{
 }); // End of creation of login table
 
 app.get('/',function(req,res){
-  console.log(req.user);
   res.render('homeView')
 });
 
@@ -183,7 +183,6 @@ app.post('/check',
   });
 
 app.get('/:username',function(req,res){
-  debugger;
     User.findAll({
     where: {
       username: req.params.username
