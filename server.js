@@ -99,7 +99,7 @@ passport.deserializeUser(function(id, done) {
 var User = connection.define ('user',{
   firstName : {
     type : Sequelize.STRING,
-    unique : true,
+    // unique : true,
     allowNull: false,
     validation : {
       check :function(bodyVal){
@@ -116,7 +116,7 @@ var User = connection.define ('user',{
   },
   lastName : {
     type : Sequelize.STRING,
-    unique : true,
+    // unique : true,
     allowNull: false,
     validation : {
       check :function(bodyVal){
