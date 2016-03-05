@@ -69,7 +69,7 @@
         </a>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2" id="invite_your_friend">
     <div class="panel panel-danger">
       <div class="panel-heading"><strong>Invite Your Friend</strong></div>
         <div class="panel-body">
@@ -95,7 +95,7 @@
   </div>
 </div>
 <!-- End of Corousal  -->
-  <div class="row">
+  <div class="row" id="place_listing_table">
     <div class="col-md-8">
       <h1>Place List</h1>
       <form method="GET" action="/newBrunswick">
@@ -112,6 +112,7 @@
               <td>Ratings</td>
               <td>Image Url</td>
               <td>Address</td>
+              <td>Save</td>
             </thead>
           {{#each businesses}}
               <tr>
@@ -119,6 +120,7 @@
                 <td>{{rating}}</td>
                 <td><a href="{{image_url}}">Photo</a></td>
                 <td>{{location.display_address}}</td>
+                <td><button class="btn btn-info" type="submit">Save</button></td>
               </tr>
           {{/each}}
         </table>
@@ -128,17 +130,25 @@
   <footer>
     <div>
         <img src="./img/footer.jpg" id="footer_img">
-    </div>
-<!--     <i class="divider" id="divider_vertical"></i>
-    <div>
-        <h2>Title</h2>
-        <p>text</p>
-    </div>
+    </div>    
     <i class="divider" id="divider_horizontal"></i>
-    <div>
-        <h2>Title</h2>
-        <p>text</p>
-    </div> -->
+    <div id="footer_icons">
+        <h2>Social Media</h2>
+          <div>
+            <a href="https://twitter.com/rutgers"><img src="/img/twitter.jpg"></a>
+          
+            <a href="https://www.facebook.com/RutgersU/"><img src="/img/facebook.jpg"></a>
+          
+            <a href="https://www.youtube.com/user/Rutgers"><img src="/img/youtube.jpg"></>
+         
+            <a href="https://www.instagram.com/RutgersU/"><img src="/img/instagram.jpg"></a>
+          
+            <a href="https://www.linkedin.com/edu/school?trkInfo=tas%3Arutgers%2Cidx%3A5-1-12&trk=tyah&id=18874"><img src="/img/linkdin.jpg"></a>
+          
+            <a href="http://www.pinterest.com/rutgersu/"><img src="/img/pintrest.jpg"></a>
+          </div>
+
+    </div>
   </footer>
 
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="loginModal">
