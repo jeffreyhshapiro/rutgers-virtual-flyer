@@ -203,15 +203,32 @@ app.post('/loginentry',function(req,res){
 app.get('/newBrunswick', function(req, res){
   yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ',limit: 10 })
   .then(function (data) {
-    debugger;
-    console.log(data.businesses[0].name);
-    res.render('homeView',{data});
+    res.render('homeView',{businesses: data.businesses});
   })
   .catch(function (err) {
     console.error(err);
   });
 })
 
+app.get('/newark', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'University Ave, Newark, NJ 07102',limit: 10 })
+  .then(function (data) {
+    res.render('homeView',{businesses: data.businesses});
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+})
+
+app.get('/biomed', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'Sutphen Rd, Piscataway Township, NJ 08854',limit: 10 })
+  .then(function (data) {
+    res.render('homeView',{businesses: data.businesses});
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+})
 //check login with db
 // app.post('/check', passport.authenticate('local', {
 //     successRedirect: '/?msg=Welcome back!!',
@@ -225,7 +242,9 @@ app.post('/check',
      // If this function gets called, authentication was successful.
      // `req.user` contains the authenticated user.
      // console.log(req.user.username);
-     res.redirect('/' + req.user.username);
+     req.session.username = req.user.username;
+     console.log("session username"+req.session.username);
+     res.redirect('/' + req.session.username);
  });
 
 app.get('/:username', function (req, res, next) {
