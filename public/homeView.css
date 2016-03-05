@@ -143,6 +143,6 @@ h3{
     color:red;
 }
 
-#footer-icons {
-    align-items: left;
+#footer_icons {
+    margin-left: 200px;
 }
