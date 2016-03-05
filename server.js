@@ -213,12 +213,20 @@ app.get('/newBrunswick', function(req, res){
 })
 
 //check login with db
-app.post('/check', passport.authenticate('local', {
-    successRedirect: '/?msg=Welcome back!!',
-    failureRedirect: '/?msg=Login Credentials do not work'
-    // failureFlash: 'Invalid username or password.'
-}));
+// app.post('/check', passport.authenticate('local', {
+//     successRedirect: '/?msg=Welcome back!!',
+//     failureRedirect: '/?msg=Login Credentials do not work'
+//     // failureFlash: 'Invalid username or password.'
+// }));
 
+app.post('/check',
+  passport.authenticate('local'),
+   function(req, res) {
+     // If this function gets called, authentication was successful.
+     // `req.user` contains the authenticated user.
+     // console.log(req.user.username);
+     res.redirect('/' + req.user.username);
+ });
 
 app.get('/:username', function (req, res, next) {
   // if the user ID is 0, skip to the next route
