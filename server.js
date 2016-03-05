@@ -201,17 +201,38 @@ app.post('/loginentry',function(req,res){
 // });
 
 app.get('/newBrunswick', function(req, res){
-  yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ',limit: 10 })
+  console.log(req.query.place)
+  // console.log(req.param);
+  // console.log("the place is "+req.body.placeType);
+  if (req.query.place) {
+    yelp.search({ term: req.query.place, location: 'New Brunswick, NJ',limit: 20 })
   .then(function (data) {
     res.render('homeView',{businesses: data.businesses});
+    console.log(data)
   })
   .catch(function (err) {
     console.error(err);
   });
+  }
+    else{
+  yelp.search({ term: req.body.placeType, location: 'New Brunswick, NJ',limit: 20 })
+  .then(function (data) {
+    res.render('homeView',{businesses: data.businesses});
+    console.log(data)
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+  }
 })
 
+app.post('/newBrunswick', function(req, res){
+  console.log("this place is posted "+req.body.placeType);
+  res.redirect('/newBrunswick')
+});
+
 app.get('/newark', function(req, res){
-  yelp.search({ term: req.body.targetFun, location: 'University Ave, Newark, NJ 07102',limit: 10 })
+  yelp.search({ term: req.body.placeType, location: 'University Ave, Newark, NJ 07102',limit: 20 })
   .then(function (data) {
     res.render('homeView',{businesses: data.businesses});
   })
@@ -221,7 +242,7 @@ app.get('/newark', function(req, res){
 })
 
 app.get('/biomed', function(req, res){
-  yelp.search({ term: req.body.targetFun, location: 'Sutphen Rd, Piscataway Township, NJ 08854',limit: 10 })
+  yelp.search({ term: req.body.placeType, location: 'Sutphen Rd, Piscataway Township, NJ 08854',limit: 20 })
   .then(function (data) {
     res.render('homeView',{businesses: data.businesses});
   })

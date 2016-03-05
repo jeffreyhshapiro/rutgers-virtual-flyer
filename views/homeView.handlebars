@@ -1,11 +1,9 @@
   <div id="header">
-    <div id="nav">
+    <nav class="navbar navbar-default">
       <img src="/img/logo.jpg" id="logo"/>
-      <a href="#" class="nav_links"> Places Listings </a>
-      <a href="/placeDetails" class="nav_links"> Place Detail </a>
       <a href="#" class="nav_links" id="login" data-target="#loginModal"> Login/Register </a>
       <!-- <a href="/" class="nav_links"> Home </a> -->
-    </div>
+    </nav>
     <div id="welcome_text_div">
     <p id="welcome_text"> Welcome<span id="authenticatedUser">, {{authenticatedUser}}</span> </p>
       <p id="welcome_under_text"> to Rutgers University </p>
@@ -100,6 +98,14 @@
   <div class="row">
     <div class="col-md-8">
       <h1>Place List</h1>
+      <form method="GET" action="/newBrunswick">
+        <div class="form-group">
+          <label for="exampleInputEmail1">What are you looking for?</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" name="place" placeholder="Food, drinks, etc">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <br>
           <table class="table table-bordered">
             <thead>
               <td>Place Name</td>
@@ -109,7 +115,7 @@
             </thead>
           {{#each businesses}}
               <tr>
-                <td>{{name}}</td>
+                <td><a href="{{url}}" target="_blank">{{name}}</a></td>
                 <td>{{rating}}</td>
                 <td><a href="{{image_url}}">Photo</a></td>
                 <td>{{location.display_address}}</td>
@@ -123,7 +129,7 @@
     <div>
         <img src="./img/footer.jpg" id="footer_img">
     </div>
-    <i class="divider" id="divider_vertical"></i>
+<!--     <i class="divider" id="divider_vertical"></i>
     <div>
         <h2>Title</h2>
         <p>text</p>
@@ -132,7 +138,7 @@
     <div>
         <h2>Title</h2>
         <p>text</p>
-    </div>
+    </div> -->
   </footer>
 
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="loginModal">
