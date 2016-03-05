@@ -74,25 +74,18 @@ function initAutocomplete() {
 //           console.log(errorThrown);
 //     }
 // });
-      // $.ajax({
-      //   type: "GET",
-      //   url: "https://maps.googleapis.com/maps/api/place/details/json?placeid="+place.place_id+"&key=AIzaSyAmytpwQ4urhmqmCOUSSMyJwogoAdgQrDM",
-      //   success: function(data) {
-      //     console.log("ajax success!")
-      //   },
-      //   error: function(jqXHR, textstatus, errorThrown) {
-      //     console.log(jqXHR);
-      //     console.log(textstatus);
-      //     console.log(errorThrown);
-      //   }
-      // });
-
-var request = {
-  placeId: place.place_id
-};
-
-service = new google.maps.places.PlacesService(map);
-service.getDetails(request, callback);
+      $.ajax({
+        type: "GET",
+        url: "https://maps.googleapis.com/maps/api/place/details/json?placeid="+place.place_id+"&key=AIzaSyAmytpwQ4urhmqmCOUSSMyJwogoAdgQrDM",
+        success: function(data) {
+          console.log("ajax success!")
+        },
+        error: function(jqXHR, textstatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(textstatus);
+          console.log(errorThrown);
+        }
+      });
               
       var icon = {
         url: place.icon,
