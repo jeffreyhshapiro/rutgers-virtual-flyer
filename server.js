@@ -12,7 +12,7 @@ var passportFacebook = require('passport-facebook').Strategy;
 var app = express();
 
 // var connection = new Sequelize('DB_Virtual_Flyer','root');
-var connection = new Sequelize ('mysql://sql2a0nrhy1ejduq:unq2bz7o6h39ykrd@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xjwoutzkamibecal');
+var connection = new Sequelize ('mysql://fumuromxdo1b50a9:vf02gxl7t9h40dnf@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/con4ys57b1f4red1');
 
 app.use(express.static('public'));
 
