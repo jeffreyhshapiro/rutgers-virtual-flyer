@@ -142,3 +142,7 @@ footer {
 h3{
     color:red;
 }
+
+#footer-icons {
+    align-items: left;
+}
