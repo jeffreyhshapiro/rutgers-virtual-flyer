@@ -12,7 +12,7 @@ var passportFacebook = require('passport-facebook').Strategy;
 var app = express();
 
 // var connection = new Sequelize('DB_Virtual_Flyer','root');
-var connection = new Sequelize ('mysql://sql2a0nrhy1ejduq:unq2bz7o6h39ykrd@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xjwoutzkamibecal');
+var connection = new Sequelize ('mysql://fumuromxdo1b50a9:vf02gxl7t9h40dnf@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/con4ys57b1f4red1');
 
 app.use(express.static('public'));
 
@@ -133,7 +133,7 @@ passport.deserializeUser(function(id, done) {
 var User = connection.define ('user',{
   firstName : {
     type : Sequelize.STRING,
-    unique : true,
+    // unique : true,
     allowNull: false,
     validation : {
       check :function(bodyVal){
@@ -150,7 +150,7 @@ var User = connection.define ('user',{
   },
   lastName : {
     type : Sequelize.STRING,
-    unique : true,
+    // unique : true,
     allowNull: false,
     validation : {
       check :function(bodyVal){
@@ -195,15 +195,17 @@ app.post('/loginentry',function(req,res){
 
  });
 
+// app.get('/results', function(req, res){
+//   console.log(req.body);
+//   res.render('homeView')
+// });
 
-app.get('/placeDetails', function(req, res){
-  res.render('placedetails')
-});
-
-app.get('/results', function(req, res){
-  yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ', limit: 5})
+app.get('/newBrunswick', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ',limit: 10 })
   .then(function (data) {
-    res.render('placedetails',{data});
+    debugger;
+    console.log(data.businesses[0].name);
+    res.render('homeView',{data});
   })
   .catch(function (err) {
     console.error(err);
@@ -211,12 +213,20 @@ app.get('/results', function(req, res){
 })
 
 //check login with db
-app.post('/check', passport.authenticate('local', {
-    successRedirect: '/?msg=Welcome back!!',
-    failureRedirect: '/?msg=Login Credentials do not work'
-    // failureFlash: 'Invalid username or password.'
-}));
+// app.post('/check', passport.authenticate('local', {
+//     successRedirect: '/?msg=Welcome back!!',
+//     failureRedirect: '/?msg=Login Credentials do not work'
+//     // failureFlash: 'Invalid username or password.'
+// }));
 
+app.post('/check',
+  passport.authenticate('local'),
+   function(req, res) {
+     // If this function gets called, authentication was successful.
+     // `req.user` contains the authenticated user.
+     // console.log(req.user.username);
+     res.redirect('/' + req.user.username);
+ });
 
 app.get('/:username', function (req, res, next) {
   // if the user ID is 0, skip to the next route
