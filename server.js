@@ -8,8 +8,10 @@ var session = require('express-session');
 //requiring passport last
 var passport = require('passport');
 var passportLocal = require('passport-local').Strategy;
+var passportFacebook = require('passport-facebook').Strategy;
 
 var app = express();
+
 // var connection = new Sequelize('DB_Virtual_Flyer','root');
 var connection = new Sequelize ('mysql://sql2a0nrhy1ejduq:unq2bz7o6h39ykrd@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xjwoutzkamibecal');
 
@@ -35,34 +37,37 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-//passport use methed as callback when being authenticated
-// passport.use(new passportLocal(function(username, password, done) {
-//     //check password in db
-//     Users.findOne({
-//         where: {
-//             emailAddress: emailAddress
-//         }
-//     }).then(function(user) {
-//         //check password against hash
-//         if(user){
-//             bcrypt.compare(password, user.dataValues.password, function(err, user) {
-//                 if (user) {
-//                   //if password is correct authenticate the user with cookie
-//                   done(null, { id: emailAddress, emailAddress: emailAddress });
-//                 } else{
-//                   done(null, null);
-//                 }
-//             });
-//         } else {
-//             done(null, null);
-//         }
-//     });
+passport.use(new passportFacebook({
+    clientID: '1548091428822940',
+    clientSecret: 'f60d23cc2234f4886a397996bb870207',
+    callbackURL: "http://localhost:8080/facebook/return"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
 
-// }));
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+app.get('/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/facebook/return',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+      debugger;
+    res.redirect('/');
+  });
 
 passport.use(new passportLocal.Strategy(function(username, password, done) {
     //check password in db
-    Users.findOne({
+    User.findOne({
         where: {
             username: username
         }
@@ -92,7 +97,7 @@ passport.deserializeUser(function(id, done) {
     done(null, { id: id, name: id })
 });
 
-var Users = connection.define ('user',{
+var User = connection.define ('user',{
   firstName : {
     type : Sequelize.STRING,
     unique : true,
@@ -145,11 +150,11 @@ var Users = connection.define ('user',{
 }); // End of creation of login table
 
 app.get('/',function(req,res){
-  res.render('homeView')
+  res.render('homeView');
 });
 
 app.post('/loginentry',function(req,res){
-  Users.create(req.body).then(function(results){
+  User.create(req.body).then(function(results){
     res.redirect('/?msg=Account Created');
   }).catch(function(err){
     res.redirect('/?msg='+ err.errors[0].message);
@@ -157,6 +162,7 @@ app.post('/loginentry',function(req,res){
 
  });
 
+<<<<<<< HEAD
 app.get('/placeDetails', function(req, res){
   res.render('placedetails')
 });
@@ -167,7 +173,53 @@ app.post('/check', passport.authenticate('local', {
     failureRedirect: '/?msg=Login Credentials do not work'
     // failureFlash: 'Invalid username or password.'
 }));
+=======
+app.post('/check',
+  passport.authenticate('local'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    // console.log(req.user.username);
+    res.redirect('/' + req.user.username);
+  });
+>>>>>>> ab8e4505dc1b842fbb6a65aa640b101a407ac896
 
+app.get('/:username', function (req, res, next) {
+  // if the user ID is 0, skip to the next route
+  if (req.params.username === "") next('route');
+  // otherwise pass the control to the next middleware function in this stack
+  else next(); //
+}, function (req, res, next) {
+    User.findAll({
+    where: {
+      username: req.params.username
+    }
+  }).then(function(results){
+    if(results != ""){
+    var authenticatedUser = results[0].dataValues.firstName;
+    res.render('homeView',{authenticatedUser});
+    } else {
+      res.render('homeView');
+    }
+
+  });
+});
+
+// handler for the /user/:id path, which renders a special page
+// app.get('/user/:username', function (req, res, next) {
+//   res.render('homeView');
+// });
+
+// app.get('/:username',function(req,res){
+//     User.findAll({
+//     where: {
+//       username: req.params.username
+//     }
+//   }).then(function(results){
+//     var authenticatedUser = results[0].dataValues.firstName;
+//     res.render('homeView',{authenticatedUser});
+//   });
+// });
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);

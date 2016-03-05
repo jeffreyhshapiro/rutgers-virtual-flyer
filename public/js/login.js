@@ -57,7 +57,7 @@ $(document).ready(function(){
   // code below.
   function checkLoginState() {
     console.log("Inside clicked login state");
-    debugger;
+    // debugger;
     FB.getLoginStatus(function(response) {
       console.log("Inside login status");
       statusChangeCallback(response);
