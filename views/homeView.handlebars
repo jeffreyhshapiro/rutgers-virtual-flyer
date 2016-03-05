@@ -34,12 +34,14 @@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <img src="/img/NewBrunswick.jpg" alt="Rutgers at New Brunswick">
-            <div class="carousel-caption">
-              <h3>Search for places to do/eat/play around New Brunswick</h3>
+            <div class="item active">
+              <a href="/newBrunswick">
+                <img src="/img/NewBrunswick.jpg" alt="Rutgers at New Brunswick" name="newBrunswick">
+              </a>
+              <div class="carousel-caption">
+                <h3>Search for places to do/eat/play around New Brunswick</h3>
+              </div>
             </div>
-          </div>
           <div class="item">
             <img src="/img/RutgersBioMedical.jpg" alt="Rutgers Bio Medical University">
             <div class="carousel-caption">
@@ -91,6 +93,14 @@
   </div>
 </div>
 <!-- End of Corousal  -->
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Place List</h1>
+          {{#each data}}
+            {{this}}
+          {{/each}}
+    </div>
+  </div>
 
   <footer>
     <div>

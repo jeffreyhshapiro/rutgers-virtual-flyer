@@ -195,16 +195,17 @@ app.post('/loginentry',function(req,res){
 
  });
 
+// app.get('/results', function(req, res){
+//   console.log(req.body);
+//   res.render('homeView')
+// });
 
-app.get('/placeDetails', function(req, res){
-  res.render('placedetails')
-});
-
-app.get('/results', function(req, res){
-  yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ' })
+app.get('/newBrunswick', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ',limit: 10 })
   .then(function (data) {
-    console.log(data)
-    res.render('placedetails',{data});
+    debugger;
+    console.log(data.businesses[0].name);
+    res.render('homeView',{data});
   })
   .catch(function (err) {
     console.error(err);
