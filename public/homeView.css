@@ -125,6 +125,7 @@ footer {
 #footer_img {
     width: 250px;
     height: 250px;
+    text-align: center;
 }
 #footerSpan {
     font-style: italic;
@@ -140,4 +141,28 @@ footer {
 }
 h3{
     color:red;
+}
+
+#heldrich {
+    max-width: 500px;
+    max-height: 500px;
+    width: 358px;
+}
+
+#fatcat {
+    max-width: 200px;
+    max-height: 200px;
+    width: 150px;
+}
+
+#mamouns {
+    max-width: 200px;
+    max-height: 200px;
+    width: 150px;
+}
+
+#boli{
+    max-width: 200px;
+    max-height: 200px;
+    width: 150px;
 }
