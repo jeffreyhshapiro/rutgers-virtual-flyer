@@ -183,6 +183,11 @@ var User = connection.define ('user',{
 }); // End of creation of login table
 
 app.get('/',function(req,res){
+  // console.log("session test" +req.session)
+  // console.log("auth test" +req.isAuthenticated())
+  // console.log("user test" +req.username)
+  // console.log("session user test" +req.username)
+  // console.log("req test" +req)
   res.render('homeView');
 });
 

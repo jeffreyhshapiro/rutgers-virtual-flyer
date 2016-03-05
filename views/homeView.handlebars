@@ -1,8 +1,8 @@
   <div id="header">
     <div id="nav">
       <img src="/img/logo.jpg" id="logo"/>
-      <a href="#" class="nav_links"> Places Listings </a>
-      <a href="/placeDetails" class="nav_links"> Place Detail </a>
+<!--       <a href="#" class="nav_links"> Places Listings </a>
+      <a href="/placeDetails" class="nav_links"> Place Detail </a> -->
       <a href="#" class="nav_links" id="login" data-target="#loginModal"> Login/Register </a>
       <!-- <a href="/" class="nav_links"> Home </a> -->
     </div>
@@ -102,19 +102,19 @@
       <h1>Place List</h1>
           <table class="table table-bordered">
             <thead>
-              <td>Place Name</td>
-              <td>Ratings</td>
-              <td>Image Url</td>
-              <td>Address</td>
-              <td>Save</td>
+              <td><strong>Place Name</strong></td>
+              <td><strong>Ratings</strong></td>
+              <td><strong>Photo</strong></td>
+              <td><strong>Address</strong></td>
+              <td><strong></strong></td>
             </thead>
           {{#each businesses}}
               <tr>
                 <td><a href="{{url}}" target="_blank">{{name}}</a></td>
                 <td>{{rating}}</td>
-                <td><a href="{{image_url}}">Photo</a></td>
+                <td><img src="{{image_url}}"></td>
                 <td>{{location.display_address}}</td>
-                <td><button class="btn btn-info" type="submit">Save</button></td>
+                <td><button class="btn btn-info" type="submit">Review</button></td>
               </tr>
           {{/each}}
         </table>
