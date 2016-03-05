@@ -203,7 +203,8 @@ app.get('/placeDetails', function(req, res){
 app.get('/results', function(req, res){
   yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ' })
   .then(function (data) {
-    console.log(data);
+    console.log(data)
+    res.render({data});
   })
   .catch(function (err) {
     console.error(err);
