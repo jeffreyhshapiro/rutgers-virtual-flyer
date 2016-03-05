@@ -55,21 +55,45 @@ function initAutocomplete() {
       var createPanels = $("<div>").addClass("panel panel-default").append(addPanelBody)
       var addPanelBody = $("<div>").addClass("panel-body").addClass("col-md-6").append(place.name).append("<br>"+place.formatted_address).append(rating);
       var placeInfo = $("#placeInfo").append(addPanelBody);
+      console.log(place.place_id)
 
-      $.ajax({
-        type: "GET",
-        url: "https://maps.googleapis.com/maps/api/place/details/json?placeid="+place.place_id+"&key=AIzaSyAmytpwQ4urhmqmCOUSSMyJwogoAdgQrDM",
-        success: function(data) {
-          console.log("ajax success!")
-          console.log(data);
-        },
-        error: function(jqXHR, textstatus, errorThrown) {
-          console.log(jqXHR);
-          console.log(textstatus);
-          console.log(errorThrown);
-        }
-      });
-                                      
+// $.ajax({
+//    type: 'GET',
+//     url: url,
+//     async: false,
+//     jsonpCallback: 'jsonCallback',
+//     contentType: "application/json",
+//     dataType: 'jsonp',
+//     success: function(json) {
+//       var data = $.parseJSON(json)
+//        console.dir(json);
+//     },
+//     error: function(jqXHR, textstatus, errorThrown) {
+//           console.log(jqXHR);
+//           console.log(textstatus);
+//           console.log(errorThrown);
+//     }
+// });
+      // $.ajax({
+      //   type: "GET",
+      //   url: "https://maps.googleapis.com/maps/api/place/details/json?placeid="+place.place_id+"&key=AIzaSyAmytpwQ4urhmqmCOUSSMyJwogoAdgQrDM",
+      //   success: function(data) {
+      //     console.log("ajax success!")
+      //   },
+      //   error: function(jqXHR, textstatus, errorThrown) {
+      //     console.log(jqXHR);
+      //     console.log(textstatus);
+      //     console.log(errorThrown);
+      //   }
+      // });
+
+var request = {
+  placeId: place.place_id
+};
+
+service = new google.maps.places.PlacesService(map);
+service.getDetails(request, callback);
+              
       var icon = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
