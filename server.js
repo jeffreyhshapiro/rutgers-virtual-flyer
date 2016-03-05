@@ -162,7 +162,7 @@ app.post('/loginentry',function(req,res){
 
  });
 
-<<<<<<< HEAD
+
 app.get('/placeDetails', function(req, res){
   res.render('placedetails')
 });
@@ -173,16 +173,7 @@ app.post('/check', passport.authenticate('local', {
     failureRedirect: '/?msg=Login Credentials do not work'
     // failureFlash: 'Invalid username or password.'
 }));
-=======
-app.post('/check',
-  passport.authenticate('local'),
-  function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    // console.log(req.user.username);
-    res.redirect('/' + req.user.username);
-  });
->>>>>>> ab8e4505dc1b842fbb6a65aa640b101a407ac896
+
 
 app.get('/:username', function (req, res, next) {
   // if the user ID is 0, skip to the next route
