@@ -142,3 +142,15 @@ footer {
 h3{
     color:red;
 }
+
+#footer_icons {
+    margin-left: 200px;
+}
+
+#invite_your_friend {
+    padding-right: 50px;
+}
+
+#place_listing_table {
+    padding-left: 300px;
+}
