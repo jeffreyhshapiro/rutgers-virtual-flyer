@@ -9,10 +9,10 @@ var session = require('express-session');
 var passport = require('passport');
 var passportLocal = require('passport-local').Strategy;
 var passportFacebook = require('passport-facebook').Strategy;
-
 var app = express();
-var connection = new Sequelize('DB_Virtual_Flyer','root');
-// var connection = new Sequelize ('mysql://sql2a0nrhy1ejduq:unq2bz7o6h39ykrd@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/xjwoutzkamibecal');
+
+// var connection = new Sequelize('DB_Virtual_Flyer','root');
+var connection = new Sequelize ('mysql://fumuromxdo1b50a9:vf02gxl7t9h40dnf@l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/con4ys57b1f4red1');
 
 app.use(express.static('public'));
 
@@ -24,6 +24,40 @@ app.set('view engine','handlebars');
 app.use(bodyParser.urlencoded({
   extended :false
 }));
+
+//Yelp code
+// Request API access: http://www.yelp.com/developers/getting_started/api_access
+var Yelp = require('yelp');
+
+var yelp = new Yelp({
+  consumer_key: '1qx0RwFFzsev4FUl6OyZ8Q',
+  consumer_secret: 'BEXfjU3AGkVMYfKNil2ON3Rzi1E',
+  token: '92Ft81q1waTiOixHnOOAbeG2BNDRwwzz',
+  token_secret: 'yrpc4_6PHI4zdx4X9f_C7Nl7_xo',
+});
+
+// See http://www.yelp.com/developers/documentation/v2/search_api
+// yelp.search({ term: 'food', location: 'New Brunswick, NJ' })
+// .then(function (data) {
+//   console.log(data);
+// })
+// .catch(function (err) {
+//   console.error(err);
+// });
+// See http://www.yelp.com/developers/documentation/v2/business
+// yelp.business('yelp-san-francisco')
+//   .then(console.log)
+//   .catch(console.error);
+
+// yelp.phoneSearch({ phone: '+15555555555' })
+//   .then(console.log)
+//   .catch(console.error);
+
+// // A callback based API is also available:
+// yelp.business('yelp-san-francisco', function(err, data) {
+//   if (err) return console.log(error);
+//   console.log(data);
+// });
 
 //middleware init
 app.use(passport.initialize());
@@ -99,7 +133,7 @@ passport.deserializeUser(function(id, done) {
 var User = connection.define ('user',{
   firstName : {
     type : Sequelize.STRING,
-    unique : true,
+    // unique : true,
     allowNull: false,
     validation : {
       check :function(bodyVal){
@@ -116,7 +150,7 @@ var User = connection.define ('user',{
   },
   lastName : {
     type : Sequelize.STRING,
-    unique : true,
+    // unique : true,
     allowNull: false,
     validation : {
       check :function(bodyVal){
@@ -149,7 +183,7 @@ var User = connection.define ('user',{
 }); // End of creation of login table
 
 app.get('/',function(req,res){
-  res.render('homeView')
+  res.render('homeView');
 });
 
 app.post('/loginentry',function(req,res){
@@ -161,6 +195,40 @@ app.post('/loginentry',function(req,res){
 
  });
 
+// app.get('/results', function(req, res){
+//   console.log(req.body);
+//   res.render('homeView')
+// });
+
+app.get('/newBrunswick', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'New Brunswick, NJ',limit: 10 })
+  .then(function (data) {
+    res.render('homeView',{businesses: data.businesses});
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+})
+
+app.get('/newark', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'University Ave, Newark, NJ 07102',limit: 10 })
+  .then(function (data) {
+    res.render('homeView',{businesses: data.businesses});
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+})
+
+app.get('/biomed', function(req, res){
+  yelp.search({ term: req.body.targetFun, location: 'Sutphen Rd, Piscataway Township, NJ 08854',limit: 10 })
+  .then(function (data) {
+    res.render('homeView',{businesses: data.businesses});
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+})
 //check login with db
 // app.post('/check', passport.authenticate('local', {
 //     successRedirect: '/?msg=Welcome back!!',
@@ -168,33 +236,53 @@ app.post('/loginentry',function(req,res){
 //     // failureFlash: 'Invalid username or password.'
 // }));
 
-// app.post('/check',
-//   passport.authenticate('local', {
-//     successRedirect :'/',
-//     failureRedirect:'/check'
-//   }));
 app.post('/check',
   passport.authenticate('local'),
-  function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    // console.log(req.user.username);
-    res.redirect('/' + req.user.username);
-  });
+   function(req, res) {
+     // If this function gets called, authentication was successful.
+     // `req.user` contains the authenticated user.
+     // console.log(req.user.username);
+     req.session.username = req.user.username;
+     console.log("session username"+req.session.username);
+     res.redirect('/' + req.session.username);
+ });
 
-app.get('/:username',function(req,res){
+app.get('/:username', function (req, res, next) {
+  // if the user ID is 0, skip to the next route
+  if (req.params.username === "") next('route');
+  // otherwise pass the control to the next middleware function in this stack
+  else next(); //
+}, function (req, res, next) {
     User.findAll({
     where: {
       username: req.params.username
     }
   }).then(function(results){
-    // console.log(results[0].dataValues.firstName);
-    // console.log(results[0].dataValues.lastName);
+    if(results != ""){
     var authenticatedUser = results[0].dataValues.firstName;
     res.render('homeView',{authenticatedUser});
-  });
+    } else {
+      res.render('homeView');
+    }
 
+  });
 });
+
+// handler for the /user/:id path, which renders a special page
+// app.get('/user/:username', function (req, res, next) {
+//   res.render('homeView');
+// });
+
+// app.get('/:username',function(req,res){
+//     User.findAll({
+//     where: {
+//       username: req.params.username
+//     }
+//   }).then(function(results){
+//     var authenticatedUser = results[0].dataValues.firstName;
+//     res.render('homeView',{authenticatedUser});
+//   });
+// });
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);

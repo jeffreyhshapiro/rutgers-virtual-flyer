@@ -1,4 +1,4 @@
-  <head>
+  <!--<head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Places Searchbox</title>
@@ -68,4 +68,14 @@
     <div id="introMsg">Your results will appear here!</div>
     <div id="placeInfo">
     </div>
-  </body>
+  </body>-->
+
+  <form action="/results" method="GET" id="inquiryForm">
+    <input type="text" name="targetFun">
+    <input type="submit">
+  </form>
+  <p id="instructions">What are you looking for in New Brunswick? (Food, drinks, lounge, etc)</p>
+
+  <div>
+    <div id="results">{{data}}</div>
+  </div>
