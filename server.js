@@ -149,7 +149,7 @@ var User = connection.define ('user',{
 }); // End of creation of login table
 
 app.get('/',function(req,res){
-  res.render('homeView')
+  res.render('homeView');
 });
 
 app.post('/loginentry',function(req,res){
@@ -161,18 +161,6 @@ app.post('/loginentry',function(req,res){
 
  });
 
-//check login with db
-// app.post('/check', passport.authenticate('local', {
-//     successRedirect: '/?msg=Welcome back!!',
-//     failureRedirect: '/?msg=Login Credentials do not work'
-//     // failureFlash: 'Invalid username or password.'
-// }));
-
-// app.post('/check',
-//   passport.authenticate('local', {
-//     successRedirect :'/',
-//     failureRedirect:'/check'
-//   }));
 app.post('/check',
   passport.authenticate('local'),
   function(req, res) {
@@ -182,19 +170,42 @@ app.post('/check',
     res.redirect('/' + req.user.username);
   });
 
-app.get('/:username',function(req,res){
+app.get('/:username', function (req, res, next) {
+  // if the user ID is 0, skip to the next route
+  if (req.params.username === "") next('route');
+  // otherwise pass the control to the next middleware function in this stack
+  else next(); //
+}, function (req, res, next) {
     User.findAll({
     where: {
       username: req.params.username
     }
   }).then(function(results){
-    // console.log(results[0].dataValues.firstName);
-    // console.log(results[0].dataValues.lastName);
+    if(results != ""){
     var authenticatedUser = results[0].dataValues.firstName;
     res.render('homeView',{authenticatedUser});
-  });
+    } else {
+      res.render('homeView');
+    }
 
+  });
 });
+
+// handler for the /user/:id path, which renders a special page
+// app.get('/user/:username', function (req, res, next) {
+//   res.render('homeView');
+// });
+
+// app.get('/:username',function(req,res){
+//     User.findAll({
+//     where: {
+//       username: req.params.username
+//     }
+//   }).then(function(results){
+//     var authenticatedUser = results[0].dataValues.firstName;
+//     res.render('homeView',{authenticatedUser});
+//   });
+// });
 connection.sync().then(function(){
   app.listen(PORT,function(){
     console.log("Application is listening on PORT %s",PORT);
