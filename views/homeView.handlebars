@@ -106,13 +106,15 @@
               <td>Ratings</td>
               <td>Image Url</td>
               <td>Address</td>
+              <td>Save</td>
             </thead>
           {{#each businesses}}
               <tr>
-                <td>{{name}}</td>
+                <td><a href="{{url}}" target="_blank">{{name}}</a></td>
                 <td>{{rating}}</td>
                 <td><a href="{{image_url}}">Photo</a></td>
                 <td>{{location.display_address}}</td>
+                <td><button class="btn btn-info" type="submit">Save</button></td>
               </tr>
           {{/each}}
         </table>
@@ -123,7 +125,7 @@
     <div>
         <img src="./img/footer.jpg" id="footer_img">
     </div>
-    <i class="divider" id="divider_vertical"></i>
+<!--     <i class="divider" id="divider_vertical"></i>
     <div>
         <h2>Title</h2>
         <p>text</p>
@@ -132,7 +134,7 @@
     <div>
         <h2>Title</h2>
         <p>text</p>
-    </div>
+    </div> -->
   </footer>
 
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="loginModal">

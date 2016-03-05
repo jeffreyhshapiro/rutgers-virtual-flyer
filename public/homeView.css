@@ -125,6 +125,7 @@ footer {
 #footer_img {
     width: 250px;
     height: 250px;
+    text-align: center;
 }
 #footerSpan {
     font-style: italic;
